@@ -9,13 +9,11 @@
     const ws = new WebSocket('ws://127.0.0.1:8080');
     ws.addEventListener('open', () => {
         const lines = getText().split(/\r\n|\r|\n/).filter(x => !!x);
-        let totalChars = 0;
-        for (const line of lines) {
+        setInterval(() => {
+            const line = lines[Math.round(Math.random() * lines.length) % lines.length];
             ws.send(line);
-            totalChars += line.length;
-        }
-        console.log(`Sent ${totalChars} chars.`);
-        ws.close();
+            console.log(`Sent ${line.length} chars.`);
+        }, 300);
     });
 
 function getText() {
